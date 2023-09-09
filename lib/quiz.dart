@@ -22,11 +22,17 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void restartQuiz() {
+    setState(() {
+      selectedAnswers = [];
+      currentScreen = 'Start-Screen';
+    });
+  }
+
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        selectedAnswers = [];
         currentScreen = 'Result-Screen';
       });
     }
@@ -35,7 +41,7 @@ class _QuizState extends State<Quiz> {
   @override
   Widget build(BuildContext context) {
     if (currentScreen == 'Result-Screen') {
-      display = const ResultScreen();
+      display = ResultScreen(selectedAnswers, restartQuiz);
     } else if (currentScreen == 'Questions-Screen') {
       display = QuestionsScreens(chooseAnswer);
     } else {
